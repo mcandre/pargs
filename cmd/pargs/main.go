@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
@@ -32,8 +33,14 @@ func process(commandString string, leadingArgs []string, pooledArgs []string, ex
 	command.Stdout = os.Stdout
 	command.Stderr = os.Stderr
 
-	if command.Run() != nil {
+	err := command.Run()
+
+	if err != nil {
 		*exitOK = false
+
+		if err.Error() != "exit status 1" {
+			fmt.Printf("%s\n", err)
+		}
 	}
 }
 
