@@ -36,6 +36,20 @@ plays: shakespeare/tragedies/othello shakespeare/tragedies/romeoandjuliet shakes
 
 $ find shakespeare -type f -print | pargs -n 100 echo 'plays:'
 plays: shakespeare/comedies/allswellthatendswell shakespeare/comedies/asyoulikeit shakespeare/comedies/comedyoferrors shakespeare/comedies/cymbeline shakespeare/comedies/loveslabourslost shakespeare/comedies/measureforemeasure shakespeare/comedies/merchantofvenice shakespeare/comedies/merrywivesofwindsor shakespeare/comedies/midsummersnightsdream shakespeare/comedies/muchadoaboutnothing shakespeare/comedies/periclesprinceoftyre shakespeare/comedies/tamingoftheshrew shakespeare/comedies/tempest shakespeare/comedies/troilusandcressida shakespeare/comedies/twelfthnight shakespeare/comedies/twogentlemenofverona shakespeare/comedies/winterstale shakespeare/glossary shakespeare/histories/1kinghenryiv shakespeare/histories/1kinghenryvi shakespeare/histories/2kinghenryiv shakespeare/histories/2kinghenryvi shakespeare/histories/3kinghenryvi shakespeare/histories/kinghenryv shakespeare/histories/kinghenryviii shakespeare/histories/kingjohn shakespeare/histories/kingrichardii shakespeare/histories/kingrichardiii shakespeare/poetry/loverscomplaint shakespeare/poetry/rapeoflucrece shakespeare/poetry/sonnets shakespeare/poetry/various shakespeare/poetry/venusandadonis shakespeare/README shakespeare/tragedies/antonyandcleopatra shakespeare/tragedies/coriolanus shakespeare/tragedies/hamlet shakespeare/tragedies/juliuscaesar shakespeare/tragedies/kinglear shakespeare/tragedies/macbeth shakespeare/tragedies/othello shakespeare/tragedies/romeoandjuliet shakespeare/tragedies/timonofathens shakespeare/tragedies/titusandronicus
+
+$ pargs -h
+Usage:
+  pargs [options] <command> [<largs>]...
+  pargs -h
+  pargs -v
+
+  Arguments:
+    <command>         The command to execute
+    <largs>           Any leading arguments to supply to the command before each pool
+  Options:
+    -n --pool <size>  How many arguments to supply at once [default: 1000]
+    -h --help         Show usage information
+    -v --version      Show version information
 ```
 
 # DOWNLOAD
