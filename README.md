@@ -1,4 +1,4 @@
-# pargs - cross-platform xargs emphasizing argv array pooling
+# pargs - cross-platform xargs-a-like with argv array batching
 
 # EXAMPLES
 
