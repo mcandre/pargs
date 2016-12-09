@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strconv"
@@ -20,7 +21,7 @@ const Usage = `Usage:
     <command>         The command to execute
     <largs>           Any leading arguments to supply to the command before each pool
   Options:
-    -n --pool <size>  How many arguments to supply at once [default: 1000]
+    -n --pool <size>  How many arguments to supply at once. Min: 1 [default: 1000]
     -h --help         Show usage information
     -v --version      Show version information`
 
@@ -37,25 +38,14 @@ func process(commandString string, leadingArgs []string, pooledArgs []string, ex
 
 	if err != nil {
 		*exitOK = false
-
-		if err.Error() != "exit status 1" {
-			fmt.Printf("%s\n", err)
-		}
+		log.Print(err)
 	}
 }
 
 func main() {
-	arguments, err := docopt.Parse(Usage, nil, true, pargs.Version, false)
-
-	if err != nil {
-		panic(Usage)
-	}
+	arguments, _ := docopt.Parse(Usage, nil, true, pargs.Version, false)
 
 	commandString, _ := arguments["<command>"].(string)
-
-	if commandString == "" {
-		panic(Usage)
-	}
 
 	leadingArgs, _ := arguments["<largs>"].([]string)
 
@@ -63,8 +53,9 @@ func main() {
 
 	poolSize, err := strconv.Atoi(poolSizeString)
 
-	if poolSize < 1 {
-		panic(Usage)
+	if err != nil || poolSize < 1 {
+		fmt.Println(Usage)
+		os.Exit(1)
 	}
 
 	scanner := bufio.NewScanner(os.Stdin)
