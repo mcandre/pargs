@@ -1,3 +1,4 @@
+// Package main provides a pargs executable like xargs.
 package main
 
 import (
@@ -12,6 +13,7 @@ import (
 	"github.com/mcandre/pargs"
 )
 
+// Usage is a docopt-formatted specification of this application's command line interface.
 const Usage = `Usage:
   pargs [options] <command> [<largs>]...
   pargs -h
@@ -25,6 +27,7 @@ const Usage = `Usage:
     -h --help         Show usage information
     -v --version      Show version information`
 
+// process runs the given command, and forwards that command's I/O and exit status as this process's I/O and exit status.
 func process(commandString string, leadingArgs []string, pooledArgs []string, exitOK *bool) {
 	var effectiveArgs []string
 	effectiveArgs = append(effectiveArgs, leadingArgs...)
@@ -42,6 +45,7 @@ func process(commandString string, leadingArgs []string, pooledArgs []string, ex
 	}
 }
 
+// main is the entrypoint for this application.
 func main() {
 	arguments, _ := docopt.Parse(Usage, nil, true, pargs.Version, false)
 
