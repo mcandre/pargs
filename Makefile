@@ -8,7 +8,7 @@ integration-test:
 	find shakespeare -type f -print | pargs -n 2 echo 'plays:'
 
 govet:
-	go list ./... | grep -v vendor | xargs go vet -v
+	find . -path "*/vendor*" -prune -o -name "*.go" -type f -exec go tool vet -shadow {} \;
 
 golint:
 	find . -path '*/vendor/*' -prune -o -name '*.go' -type f -exec golint {} \;
