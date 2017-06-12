@@ -3,29 +3,18 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
-	"strconv"
 
-	"github.com/docopt/docopt-go"
 	"github.com/mcandre/pargs"
 )
 
-// Usage is a docopt-formatted specification of this application's command line interface.
-const Usage = `Usage:
-  pargs [options] <command> [<largs>]...
-  pargs -h
-  pargs -v
-
-  Arguments:
-    <command>         The command to execute
-    <largs>           Any leading arguments to supply to the command before each pool
-  Options:
-    -n --pool <size>  How many arguments to supply at once. Min: 1 [default: 1000]
-    -h --help         Show usage information
-    -v --version      Show version information`
+var flagPool = flag.Int("pool", 1000, "How many arguments to supply at once. Minimum 1.")
+var flagHelp = flag.Bool("help", false, "Show usage information")
+var flagVersion = flag.Bool("version", false, "Show version information")
 
 // process runs the given command, and forwards that command's I/O and exit status as this process's I/O and exit status.
 func process(commandString string, leadingArgs []string, pooledArgs []string, exitOK *bool) {
@@ -47,20 +36,28 @@ func process(commandString string, leadingArgs []string, pooledArgs []string, ex
 
 // main is the entrypoint for this application.
 func main() {
-	arguments, _ := docopt.Parse(Usage, nil, true, pargs.Version, false)
+	flag.Parse()
 
-	commandString, _ := arguments["<command>"].(string)
-
-	leadingArgs, _ := arguments["<largs>"].([]string)
-
-	poolSizeString, _ := arguments["--pool"].(string)
-
-	poolSize, err := strconv.Atoi(poolSizeString)
-
-	if err != nil || poolSize < 1 {
-		fmt.Println(Usage)
+	switch {
+	case *flagHelp:
+		flag.PrintDefaults()
 		os.Exit(1)
+	case *flagVersion:
+		fmt.Println(pargs.Version)
+		os.Exit(0)
 	}
+
+	if *flagPool < 1 {
+		log.Panic("Pool size must be >= 1.")
+	}
+
+	args := flag.Args()
+
+	if len(args) < 1 {
+		log.Panic("A command is required, supplied after any named flags.")
+	}
+
+	command, commandOptions := args[0], args[1:]
 
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -72,14 +69,14 @@ func main() {
 
 		pooledArgs = append(pooledArgs, line)
 
-		if len(pooledArgs) == poolSize {
-			process(commandString, leadingArgs, pooledArgs, &exitOK)
+		if len(pooledArgs) == *flagPool {
+			process(command, commandOptions, pooledArgs, &exitOK)
 			pooledArgs = nil
 		}
 	}
 
 	if len(pooledArgs) > 0 {
-		process(commandString, leadingArgs, pooledArgs, &exitOK)
+		process(command, commandOptions, pooledArgs, &exitOK)
 	}
 
 	if !exitOK {
