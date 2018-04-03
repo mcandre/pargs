@@ -2,4 +2,4 @@
 package pargs
 
 // Version is semver.
-const Version = "0.0.3"
+const Version = "0.0.4"
