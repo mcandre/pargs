@@ -2,8 +2,8 @@
 
 # EXAMPLES
 
-```
-$ find shakespeare -type f -print | pargs -pool 2 echo 'plays:'
+```console
+$ find shakespeare -type f -print | pargs -pool 2 echo plays:
 plays: shakespeare/comedies/allswellthatendswell shakespeare/comedies/asyoulikeit
 plays: shakespeare/comedies/comedyoferrors shakespeare/comedies/cymbeline
 plays: shakespeare/comedies/loveslabourslost shakespeare/comedies/measureforemeasure
@@ -27,14 +27,14 @@ plays: shakespeare/tragedies/kinglear shakespeare/tragedies/macbeth
 plays: shakespeare/tragedies/othello shakespeare/tragedies/romeoandjuliet
 plays: shakespeare/tragedies/timonofathens shakespeare/tragedies/titusandronicus
 
-$ find shakespeare -type f -print | pargs -pool 10 echo 'plays:'
+$ find shakespeare -type f -print | pargs -pool 10 echo plays:
 plays: shakespeare/comedies/allswellthatendswell shakespeare/comedies/asyoulikeit shakespeare/comedies/comedyoferrors shakespeare/comedies/cymbeline shakespeare/comedies/loveslabourslost shakespeare/comedies/measureforemeasure shakespeare/comedies/merchantofvenice shakespeare/comedies/merrywivesofwindsor shakespeare/comedies/midsummersnightsdream shakespeare/comedies/muchadoaboutnothing
 plays: shakespeare/comedies/periclesprinceoftyre shakespeare/comedies/tamingoftheshrew shakespeare/comedies/tempest shakespeare/comedies/troilusandcressida shakespeare/comedies/twelfthnight shakespeare/comedies/twogentlemenofverona shakespeare/comedies/winterstale shakespeare/glossary shakespeare/histories/1kinghenryiv shakespeare/histories/1kinghenryvi
 plays: shakespeare/histories/2kinghenryiv shakespeare/histories/2kinghenryvi shakespeare/histories/3kinghenryvi shakespeare/histories/kinghenryv shakespeare/histories/kinghenryviii shakespeare/histories/kingjohn shakespeare/histories/kingrichardii shakespeare/histories/kingrichardiii shakespeare/poetry/loverscomplaint shakespeare/poetry/rapeoflucrece
 plays: shakespeare/poetry/sonnets shakespeare/poetry/various shakespeare/poetry/venusandadonis shakespeare/README shakespeare/tragedies/antonyandcleopatra shakespeare/tragedies/coriolanus shakespeare/tragedies/hamlet shakespeare/tragedies/juliuscaesar shakespeare/tragedies/kinglear shakespeare/tragedies/macbeth
 plays: shakespeare/tragedies/othello shakespeare/tragedies/romeoandjuliet shakespeare/tragedies/timonofathens shakespeare/tragedies/titusandronicus
 
-$ find shakespeare -type f -print | pargs -pool 100 echo 'plays:'
+$ find shakespeare -type f -print | pargs -pool 100 echo plays:
 plays: shakespeare/comedies/allswellthatendswell shakespeare/comedies/asyoulikeit shakespeare/comedies/comedyoferrors shakespeare/comedies/cymbeline shakespeare/comedies/loveslabourslost shakespeare/comedies/measureforemeasure shakespeare/comedies/merchantofvenice shakespeare/comedies/merrywivesofwindsor shakespeare/comedies/midsummersnightsdream shakespeare/comedies/muchadoaboutnothing shakespeare/comedies/periclesprinceoftyre shakespeare/comedies/tamingoftheshrew shakespeare/comedies/tempest shakespeare/comedies/troilusandcressida shakespeare/comedies/twelfthnight shakespeare/comedies/twogentlemenofverona shakespeare/comedies/winterstale shakespeare/glossary shakespeare/histories/1kinghenryiv shakespeare/histories/1kinghenryvi shakespeare/histories/2kinghenryiv shakespeare/histories/2kinghenryvi shakespeare/histories/3kinghenryvi shakespeare/histories/kinghenryv shakespeare/histories/kinghenryviii shakespeare/histories/kingjohn shakespeare/histories/kingrichardii shakespeare/histories/kingrichardiii shakespeare/poetry/loverscomplaint shakespeare/poetry/rapeoflucrece shakespeare/poetry/sonnets shakespeare/poetry/various shakespeare/poetry/venusandadonis shakespeare/README shakespeare/tragedies/antonyandcleopatra shakespeare/tragedies/coriolanus shakespeare/tragedies/hamlet shakespeare/tragedies/juliuscaesar shakespeare/tragedies/kinglear shakespeare/tragedies/macbeth shakespeare/tragedies/othello shakespeare/tragedies/romeoandjuliet shakespeare/tragedies/timonofathens shakespeare/tragedies/titusandronicus
 
 $ pargs -help
@@ -54,27 +54,25 @@ https://github.com/mcandre/pargs/releases
 
 https://godoc.org/github.com/mcandre/pargs
 
-# REQUIREMENTS
+# RUNTIME REQUIREMENTS
 
-* [Go](https://golang.org) 1.7+ with [$GOPATH configured](https://gist.github.com/mcandre/ef73fb77a825bd153b7836ddbd9a6ddc)
+(None)
 
-## Optional
+# BUILDTIME REQUIREMENTS
 
-* [coreutils](https://www.gnu.org/software/coreutils/coreutils.html)
-* [make](https://www.gnu.org/software/make/)
+* [Go](https://golang.org/) 1.9+
+* [Docker](https://www.docker.com/)
+* [Mage](https://magefile.org/) (e.g., `go get github.com/magefile/mage`)
 * [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports) (e.g. `go get golang.org/x/tools/cmd/goimports`)
 * [golint](https://github.com/golang/lint) (e.g. `go get github.com/golang/lint/golint`)
 * [errcheck](https://github.com/kisielk/errcheck) (e.g. `go get github.com/kisielk/errcheck`)
 * [nakedret](https://github.com/alexkohler/nakedret) (e.g. `go get github.com/alexkohler/nakedret`)
-* [gox](https://github.com/mitchellh/gox) (e.g. `go get github.com/mitchellh/gox`)
-* [editorconfig-cli](https://github.com/amyboyd/editorconfig-cli) (e.g. `go get github.com/amyboyd/editorconfig-cli`)
-* [flcl](https://github.com/mcandre/flcl) (e.g. `go get github.com/mcandre/flcl/...`)
-* [shlint](https://rubygems.org/gems/shlint)
-* [shellcheck](http://hackage.haskell.org/package/ShellCheck)
+* [goxcart](https://github.com/mcandre/goxcart) (e.g., `github.com/mcandre/goxcart/...`)
+* [zipc](https://github.com/mcandre/zipc) (e.g. `go get github.com/mcandre/zipc/...`)
 
 # INSTALL FROM REMOTE GIT REPOSITORY
 
-```
+```console
 $ go get github.com/mcandre/pargs/...
 ```
 
@@ -82,37 +80,33 @@ $ go get github.com/mcandre/pargs/...
 
 # INSTALL FROM LOCAL GIT REPOSITORY
 
-```
-$ mkdir -p $GOPATH/src/github.com/mcandre
-$ git clone git@github.com:mcandre/pargs.git $GOPATH/src/github.com/mcandre/pargs
-$ cd $GOPATH/src/github.com/mcandre/pargs
+```console
+$ mkdir -p "$GOPATH/src/github.com/mcandre"
+$ git clone https://github.com:mcandre/pargs.git "$GOPATH/src/github.com/mcandre/pargs"
+$ cd "$GOPATH/src/github.com/mcandre/pargs"
 $ git submodule update --init --recursive
-$ sh -c 'cd cmd/pargs && go install'
+$ go install ./...
 ```
 
 # TEST
 
 ```
-$ make integration-test
+$ mage test
 ```
 
 # PORT
 
-```
-$ make port
+```console
+$ mage port
 ```
 
 # LINT
 
 Keep the code tidy:
 
+```console
+$ mage lint
 ```
-$ make lint
-```
-
-# GIT HOOKS
-
-See `hooks/`.
 
 # CREDITS
 
